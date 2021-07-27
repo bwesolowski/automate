@@ -5503,6 +5503,96 @@
         }
       }
     },
+    "/api/v0/infra/servers/{server_id}/orgs/{org_id}/policyfiles/{name}/revisions": {
+      "get": {
+        "tags": [
+          "InfraProxy"
+        ],
+        "operationId": "InfraProxy_GetPolicyfileRevisions",
+        "parameters": [
+          {
+            "type": "string",
+            "description": "Chef Infra Server ID.",
+            "name": "server_id",
+            "in": "path",
+            "required": true
+          },
+          {
+            "type": "string",
+            "description": "Chef Organization ID.",
+            "name": "org_id",
+            "in": "path",
+            "required": true
+          },
+          {
+            "type": "string",
+            "description": "Policyfile name.",
+            "name": "name",
+            "in": "path",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/chef.automate.api.infra_proxy.response.PolicyfileRevisions"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response",
+            "schema": {
+              "$ref": "#/definitions/grpc.gateway.runtime.Error"
+            }
+          }
+        }
+      }
+    },
+    "/api/v0/infra/servers/{server_id}/orgs/{org_id}/policygroups/{name}": {
+      "get": {
+        "tags": [
+          "InfraProxy"
+        ],
+        "operationId": "InfraProxy_GetPolicygroup",
+        "parameters": [
+          {
+            "type": "string",
+            "description": "Chef Infra Server ID.",
+            "name": "server_id",
+            "in": "path",
+            "required": true
+          },
+          {
+            "type": "string",
+            "description": "Chef Organization ID.",
+            "name": "org_id",
+            "in": "path",
+            "required": true
+          },
+          {
+            "type": "string",
+            "description": "Policygroup name.",
+            "name": "name",
+            "in": "path",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/chef.automate.api.infra_proxy.response.Policygroup"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response",
+            "schema": {
+              "$ref": "#/definitions/grpc.gateway.runtime.Error"
+            }
+          }
+        }
+      }
+    },
     "/api/v0/infra/servers/{server_id}/orgs/{org_id}/roles": {
       "get": {
         "tags": [
@@ -12221,10 +12311,7 @@
         },
         "tags": {
           "description": "Metadata defined on the control in key-value format.",
-          "type": "object",
-          "additionalProperties": {
-            "type": "string"
-          }
+          "type": "string"
         },
         "title": {
           "description": "The compact description of the control.",
@@ -17448,6 +17535,19 @@
         }
       }
     },
+    "chef.automate.api.infra_proxy.response.GroupPolicy": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "description": "Policyfile name.",
+          "type": "string"
+        },
+        "revision_id": {
+          "description": "Policyfile Revision ID.",
+          "type": "string"
+        }
+      }
+    },
     "chef.automate.api.infra_proxy.response.IncludedPolicyLock": {
       "type": "object",
       "properties": {
@@ -17724,6 +17824,27 @@
         }
       }
     },
+    "chef.automate.api.infra_proxy.response.PolicyfileRevision": {
+      "type": "object",
+      "properties": {
+        "revision_id": {
+          "type": "string",
+          "title": "policyfile revision"
+        }
+      }
+    },
+    "chef.automate.api.infra_proxy.response.PolicyfileRevisions": {
+      "type": "object",
+      "properties": {
+        "revisions": {
+          "description": "Policyfile revisions.",
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/chef.automate.api.infra_proxy.response.PolicyfileRevision"
+          }
+        }
+      }
+    },
     "chef.automate.api.infra_proxy.response.Policyfiles": {
       "type": "object",
       "properties": {
@@ -17733,6 +17854,26 @@
           "items": {
             "$ref": "#/definitions/chef.automate.api.infra_proxy.response.PolicyfileListItem"
           }
+        }
+      }
+    },
+    "chef.automate.api.infra_proxy.response.Policygroup": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "description": "Policygroup name.",
+          "type": "string"
+        },
+        "policies": {
+          "description": "Policygroup policyfiles.",
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/chef.automate.api.infra_proxy.response.GroupPolicy"
+          }
+        },
+        "uri": {
+          "description": "policygroup uri.",
+          "type": "string"
         }
       }
     },
